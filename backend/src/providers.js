@@ -46,7 +46,7 @@ export function createProvider(config = process.env) {
     mode,
     async generateStory(book) {
       const response = await client.responses.create({
-        model: config.OPENAI_TEXT_MODEL || "gpt-6.2-astra",
+        model: config.OPENAI_TEXT_MODEL || "gpt-5.4-mini",
         input: [
           { role: "system", content: "Escreva uma história infantil segura, gentil e adequada à idade informada. Não inclua dados pessoais além do apelido fornecido. Responda apenas no schema JSON solicitado." },
           { role: "user", content: JSON.stringify({ protagonistAlias: book.protagonistAlias, age: book.age, theme: book.theme, tone: book.tone }) }
