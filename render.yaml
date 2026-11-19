@@ -4,7 +4,7 @@ services:
     runtime: node
     plan: free
     rootDir: backend
-    buildCommand: npm install --no-audit --no-fund
+    buildCommand: npm ci --no-audit --no-fund
     startCommand: npm start
     healthCheckPath: /healthz
     autoDeployTrigger: off
