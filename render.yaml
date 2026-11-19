@@ -33,3 +33,4 @@ databases:
     plan: free
     databaseName: book_creator
     user: book_creator_app
+    ipAllowList: []
