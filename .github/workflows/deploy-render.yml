@@ -1,0 +1,16 @@
+name: Deploy backend to Render
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Require a configured deploy hook
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          test -n "$RENDER_DEPLOY_HOOK_URL" || { echo "Configure RENDER_DEPLOY_HOOK_URL only after approving Render deployment."; exit 1; }
+          curl --fail --silent --show-error -X POST "$RENDER_DEPLOY_HOOK_URL"

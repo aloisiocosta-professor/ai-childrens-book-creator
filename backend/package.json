@@ -1,0 +1,21 @@
+{
+  "name": "book-creator-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --env-file=../.env --watch src/server.js",
+    "test": "node --test",
+    "check": "node --check src/server.js && node --check src/app.js && node --check src/providers.js && node --check src/store.js"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.0.0",
+    "fastify": "^5.0.0",
+    "openai": "^6.0.0",
+    "pg": "^8.16.0"
+  }
+}
