@@ -1,0 +1,38 @@
+name: CI
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm install --no-audit --no-fund
+      - run: npm run check
+      - run: npm test
+        env:
+          AI_PROVIDER: mock
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check frontend files and forbidden secrets
+        run: |
+          test -s frontend/index.html
+          test -s frontend/app.js
+          test -s frontend/styles.css
+          if grep -R -nE 'sk-[A-Za-z0-9_-]{20,}' frontend; then
+            echo "Possible API key found in frontend"
+            exit 1
+          fi

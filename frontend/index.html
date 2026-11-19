@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Crie e revise uma história infantil fictícia com apoio de IA.">
+  <title>Histórias de Pequenas Aventuras</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./config.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="Página inicial">✦ Histórias de Pequenas Aventuras</a>
+    <span class="status-pill" id="mode">Demonstração local</span>
+  </header>
+  <main>
+    <section class="intro">
+      <p class="eyebrow">UM LIVRO COMEÇA COM UMA IDEIA</p>
+      <h1>Vamos inventar uma aventura?</h1>
+      <p>Monte um rascunho, revise cada página e imprima quando estiver pronto.</p>
+    </section>
+    <section class="panel" aria-labelledby="form-title">
+      <div class="panel-heading"><span class="step">01</span><div><h2 id="form-title">Quem será protagonista?</h2><p>Use um apelido inventado. Não informe sobrenome, escola ou dados de contato.</p></div></div>
+      <form id="book-form">
+        <div class="form-grid">
+          <label>Apelido fictício<input name="protagonistAlias" maxlength="40" required placeholder="Ex.: Lia"></label>
+          <label>Idade editorial<select name="age"><option value="3">3 anos</option><option value="4">4 anos</option><option value="5">5 anos</option><option value="6" selected>6 anos</option><option value="7">7 anos</option><option value="8">8 anos</option></select></label>
+          <label class="wide">Tema da aventura<input name="theme" maxlength="160" required placeholder="Ex.: uma horta que guarda um segredo"></label>
+          <label class="wide">Tom<select name="tone"><option>acolhedor</option><option>engraçado</option><option>misterioso e leve</option><option>cheio de descobertas</option></select></label>
+        </div>
+        <p class="privacy-note">Protótipo: não envie fotos nem informações reais de crianças. Este editor ainda não tem login.</p>
+        <button class="primary" type="submit" id="create">Criar rascunho de 8 páginas</button>
+        <p class="feedback" id="feedback" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+    <section id="book" class="book hidden" aria-live="polite">
+      <div class="book-heading"><div><p class="eyebrow">RASCUNHO</p><h2 id="book-title"></h2></div><button id="print" class="secondary" type="button">Imprimir / Salvar PDF</button></div>
+      <div id="pages" class="pages"></div>
+      <div class="review panel"><div><h3>Revisão do responsável</h3><p>Leia todo o conteúdo e edite as páginas antes de marcar como revisado.</p></div><button id="review" class="primary" type="button">Marcar como revisado</button><p id="review-state" class="feedback" role="status"></p></div>
+    </section>
+  </main>
+  <footer>Protótipo do AI Children's Personalized Book Creator · conteúdo fictício para demonstração</footer>
+</body>
+</html>
