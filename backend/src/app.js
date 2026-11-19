@@ -28,7 +28,7 @@ export function createApp({ config = process.env, provider = createProvider(conf
       await store.save(book);
       return reply.code(201).send(book);
     } catch (error) {
-      request.log.error({ err: error, bookId: book.id }, "book generation failed");
+      request.log.error({ errorType: error?.name || "Error" }, "book generation failed");
       return reply.code(502).send({ error: { code: "GENERATION_FAILED", message: "Não foi possível gerar o rascunho. Verifique a configuração do provedor ou tente novamente." } });
     }
   });
@@ -42,7 +42,7 @@ export function createApp({ config = process.env, provider = createProvider(conf
       const image = await provider.generateIllustration(book, pageIndex);
       return { pageIndex, ...image, temporary: true };
     } catch (error) {
-      request.log.error({ err: error, bookId: request.params.id }, "illustration generation failed");
+      request.log.error({ errorType: error?.name || "Error" }, "illustration generation failed");
       return reply.code(502).send({ error: { code: "ILLUSTRATION_FAILED", message: "Não foi possível gerar a ilustração." } });
     }
   });
