@@ -13,39 +13,55 @@ Aplicação independente para criar livros infantis personalizados com apoio de 
 
 ## Rodar localmente
 
-Requer Node.js 24+.
+Requer Node.js 24+ e Python 3.
+
+No terminal 1, na raiz do repositório:
 
 ```sh
+cp .env.example .env
 cd backend
 npm install
 npm run dev
 ```
 
-Abra `frontend/index.html`. Para chamar uma API local, edite `frontend/config.js` e defina `apiBaseUrl: "http://localhost:3000"`. Sem API configurada, o frontend usa demonstração local.
+No terminal 2, na raiz do repositório:
 
-Para PostgreSQL, copie `.env.example` para `.env`, preencha `DATABASE_URL` local e execute a API. O arquivo `.env` é ignorado pelo Git. Nunca coloque segredos em `frontend/`, GitHub Pages ou no navegador.
+```sh
+python3 -m http.server 5500 --directory frontend
+```
+
+No Windows, `py -m http.server 5500 --directory frontend` pode substituir `python3`.
+
+Edite `frontend/config.js` para definir `apiBaseUrl: "http://localhost:3000"`. Sem API configurada, o frontend usa demonstração local. O arquivo `.env` é ignorado pelo Git. Nunca coloque segredos em `frontend/`, GitHub Pages ou no navegador.
+
+Para usar PostgreSQL local, preencha `DATABASE_URL` no `.env`. Sem esse valor, a API usa memória volátil; dados somem ao reiniciar.
 
 ## Verificação
 
 ```sh
 cd backend
 npm test
+npm run check
 ```
 
 O CI roda testes em pull requests e pushes para `main`. Pages e Render têm fluxos de publicação manual separados; nenhum serviço foi provisionado e nenhum deploy foi executado por este PR.
 
 ## Estrutura
 
-- `frontend/`: editor visual sem chave ou segredo.
+- `frontend/`: editor sem chave ou segredo.
 - `backend/src/`: API, provedores e persistência.
 - `backend/sql/`: migração inicial PostgreSQL.
 - `docs/`: especificação, arquitetura, segurança de API keys e roadmap.
-- `render.yaml`: blueprint de referência; criar recursos em Render pode ter custo e exige configuração/revisão do responsável.
+- `render.yaml`: blueprint de referência; criar recursos Render exige revisão dos limites/custos.
 - `.github/workflows/`: CI, Pages manual e deploy Render manual.
 
-## Limites de segurança do MVP
+## Limites de segurança e publicação
 
-A aplicação ainda não implementa login de responsáveis, isolamento multiusuário, moderação abrangente, armazenamento durável de imagens nem política final de retenção. Não implante com dados identificáveis de crianças. O banco e as rotas devem receber autenticação/autorização antes de uso real; consulte `docs/ROADMAP.md`.
+O MVP não implementa login de responsáveis, isolamento multiusuário, moderação abrangente, armazenamento durável de imagens nem política final de retenção. Não implante com dados identificáveis de crianças.
+
+GitHub Pages está preparado para demonstração estática. O repositório está privado; contas GitHub Free só podem usar Pages com repositório público, e o site Pages é público. Além disso, as regras de Pages não o destinam a hospedar um SaaS. Confirme plano, visibilidade e uso permitido; para produção, considere hospedagem estática compatível com o produto.
+
+O Render Postgres Free expira após 30 dias e não oferece backups; não use para dados reais nem como banco de produção. O Blueprint é apenas configuração, sem criação de recursos.
 
 ## Decisões
 
